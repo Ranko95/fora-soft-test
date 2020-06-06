@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Messanger.css';
+import io from 'socket.io-client';
 // import sendIcon from '../../images/send.png';
 
+let socket;
+
 function Messanger() {
+
+  const ENDPOINT = 'localhost:5000'
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+  }, [ENDPOINT]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
