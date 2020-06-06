@@ -1,0 +1,22 @@
+.greet {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 2;
+}
+
+.greet_btn {
+  border: none;
+  border-radius: 15px;
+  padding: 12px 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.greet_btn:hover {
+  background-color: lightgreen;
+}
