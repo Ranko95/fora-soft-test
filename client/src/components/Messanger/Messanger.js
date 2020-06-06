@@ -11,6 +11,9 @@ function Messanger() {
 
   useEffect(() => {
     socket = io(ENDPOINT);
+
+    socket.emit('join', {  })
+
   }, [ENDPOINT]);
 
   const handleSubmit = (e) => {
