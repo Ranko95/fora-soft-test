@@ -1,6 +1,6 @@
 .form-container {
   width: 30%;
-  height: 200px;
+  height: auto;
   margin: 0 auto;
   background-color: lightblue;
   display: flex;
@@ -9,6 +9,7 @@
   align-items: center;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   border-radius: 5px;
+  padding: 10px 0 20px 0;
 }
 
 .form-container__form {

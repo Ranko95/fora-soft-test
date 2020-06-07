@@ -7,7 +7,7 @@ let socket;
 
 function Messanger() {
 
-  const ENDPOINT = 'localhost:5000'
+  const ENDPOINT = 'localhost:5000';
 
   useEffect(() => {
     socket = io(ENDPOINT);
