@@ -14,11 +14,11 @@ function Greetings({ user }) {
     <div className="greet-container">
     {
         show
-          ? <div className="greet-container__modal"><Modal /></div>
+          ? <div className="greet-container__modal"><Modal handleClick={handleClick} /></div>
           : null
       }
     <div className={show ? "greet greet_blur": "greet"}>
-      <h1>Welcome to the Chatime, {user}!</h1>
+      <h1>Welcome to the Chatime, {user ? user.name : "Anonymous"}!</h1>
       <p>Join a room or create your own.</p>
       <button className="greet_btn" onClick={handleClick}>Create a room</button>
     </div>

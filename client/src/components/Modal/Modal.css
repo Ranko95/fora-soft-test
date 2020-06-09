@@ -14,15 +14,19 @@
 
 .modal__form > input {
   padding: 7px;
-  margin-bottom: 10px;
   cursor: pointer;
 }
 
 .modal__form > button {
   padding: 7px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
-.modal__form > button:hover {
+.btn-submit:hover {
   background-color: lightgreen;
+}
+
+.btn-cancel:hover {
+  background-color: lightcoral;
 }

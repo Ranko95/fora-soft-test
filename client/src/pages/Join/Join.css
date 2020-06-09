@@ -34,3 +34,12 @@
 .form-container__form > button:hover {
   background-color: lightgreen;
 }
+
+.form-container__link {
+  margin-top: 15px;
+}
+
+.form-container__error {
+  margin-top: 10px;
+  width: 80%;
+}

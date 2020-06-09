@@ -1,8 +1,9 @@
-import { ADD_USER, ADD_ROOM } from './action';
+import { ADD_USER, ADD_ROOM, ADD_ERROR } from './action';
 
 const initialState = {
-  user: '',
+  user: null,
   room: null,
+  error: null,
 }
 
 export const reducer = (state = initialState, action) => {
@@ -12,6 +13,9 @@ export const reducer = (state = initialState, action) => {
 
     case ADD_ROOM:
       return { ...state, room: action.newRoom }
+
+    case ADD_ERROR:
+      return { ...state, error: action.newError }
   
     default:
       return { ...state }
