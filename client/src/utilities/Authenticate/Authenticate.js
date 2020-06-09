@@ -10,7 +10,7 @@ export default function(ComposedComponent) {
 
     useEffect(() => {
       if (!user) {
-        props.history.push('/');
+        props.history.push('/join');
       }
     }, [props.history, user])
 

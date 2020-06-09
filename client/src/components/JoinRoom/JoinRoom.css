@@ -1,0 +1,19 @@
+.join-room {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.join-room > button {
+  width: 50%;
+  border: 1px solid lightgrey;
+  cursor: pointer;
+}
+
+.join:hover {
+  background-color: lightgreen;
+}
+
+.cancel:hover {
+  background-color: lightcoral;
+}

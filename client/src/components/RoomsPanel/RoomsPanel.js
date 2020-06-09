@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Room from '../Room/Room';
 import SidePanelHead from '../SidePanelHead/SidePanelHead';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './RoomsPanel.css';
-import { v4 as uuidv4 } from 'uuid';
-import { Link } from 'react-router-dom';
 import roomsIcon from '../../images/message.png';
-import { addRoomAC } from '../../redux/action-creator';
-
-const rooms = ['room1', 'room2', 'room3', 'room4', 'room5', 'room6', 'room7', 'room8', 'room9', 'room10', 'room11', 'room12', 'room13', 'room14', 'room15', 'room16'];
+import { addRoomAC, fetchAllRoomsAC } from '../../redux/action-creator';
 
 function RoomsPanel() {
 
+  
   const dispatch = useDispatch();
+  
+  const { availableRooms } = useSelector(state => state);
+  
+  useEffect(() => {
+      const fetchAllRooms = fetchAllRoomsAC();
+      fetchAllRooms(dispatch);
+  }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
-    console.log(e.target.textContent)
-    dispatch(addRoomAC(e.target.textContent));
+    const { target } = e;
+    const id = target.closest('a').getAttribute('data-index')
+    const room = availableRooms.find(el => el._id === id);
+    dispatch(addRoomAC(room));
   }
 
   return (
@@ -25,17 +31,18 @@ function RoomsPanel() {
       <div className="head">
         <SidePanelHead icon={roomsIcon} name="Rooms" />
       </div>
-      {
-        rooms.map(room => {
-          const id = uuidv4();
-          return (
-            <div className="rooms-panel__room">
-              <Link to={`/chat/${id}`} onClick={handleClick}>
-                <Room key={id} title={room} />
-              </Link>
-            </div>
-          )
-        })
+      { 
+        availableRooms.length
+          ? availableRooms.map(room => {
+              return (
+                <a href="#" onClick={handleClick} data-index={room._id}> 
+                  <div className="rooms-panel__room" >
+                    <Room key={room._id} title={room.name} />
+                  </div>
+                </a>
+              )
+            })
+          : null
       }
     </div>
   )

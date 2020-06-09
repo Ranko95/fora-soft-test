@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './Modal.css';
 import { fetchNewRoomAC } from '../../redux/action-creator';
 
-function Modal({handleClick}) {
+function Modal({ handleClick }) {
 
   const [name, setName] = useState('');
 

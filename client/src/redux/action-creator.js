@@ -1,4 +1,4 @@
-import { ADD_USER, ADD_ROOM, ADD_ERROR } from './action';
+import { ADD_USER, ADD_ROOM, ADD_AVAILABLE_ROOM, ADD_ERROR, JOIN_ROOM, DISCONNECT } from './action';
 
 export const addUserAC = (name) => ({
   type: ADD_USER,
@@ -10,10 +10,26 @@ export const addRoomAC = (room) => ({
   newRoom: room
 });
 
+export const disconnectAC = () => ({
+  type: DISCONNECT,
+  newRoom: null
+})
+
+export const addAvailableRoomAC = (room) => ({
+  type: ADD_AVAILABLE_ROOM,
+  newRoom: room
+});
+
 export const addErrorAC = (error) => ({
   type: ADD_ERROR,
   newError: error
-})
+});
+
+export const joinRoomAC = (user, roomId) => ({
+  type: JOIN_ROOM,
+  newUser: user,
+  roomId,
+}); 
 
 export const fetchNewUserAC = (name, email, password) => {
   return async (dispatch) => {
@@ -63,5 +79,36 @@ export const fetchNewRoomAC = (name, userId) => {
     });
     const result = await response.json();
     dispatch(addRoomAC(result.newRoom));
+  }
+}
+
+export const fetchAllRoomsAC = () => {
+  return async (dispatch) => {
+    const response = await fetch('http://localhost:5000/rooms/', {
+      method: 'GET',
+    });
+    const result = await response.json();
+    console.log(result.rooms);
+    if (!result.rooms.length) {
+      return;
+    }
+    for (let i = 0; i < result.rooms.length; i ++) {
+      dispatch(addAvailableRoomAC(result.rooms[i]));
+    }
+  }
+}
+
+export const fetchJoinRoomAC = (user, roomId) => {
+  return async (dispatch) => {
+    const response = await fetch('http://localhost:5000/rooms/room', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId: user._id, roomId }),
+    });
+    if (response.ok) {
+      dispatch(joinRoomAC(user, roomId));
+    }
   }
 }
