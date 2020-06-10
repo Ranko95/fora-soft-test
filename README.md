@@ -29,6 +29,6 @@ Solution should:
 
 # Launch the app
 
-* git clone
+* git clone https://github.com/Ranko95/fora-soft-test.git
 * cd sever && npm i && npm start
 * cd client && npm i && npm start
