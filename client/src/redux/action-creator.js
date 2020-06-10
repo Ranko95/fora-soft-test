@@ -1,4 +1,4 @@
-import { ADD_USER, ADD_ROOM, ADD_AVAILABLE_ROOM, ADD_ERROR, JOIN_ROOM, DISCONNECT } from './action';
+import { ADD_USER, ADD_ROOM, ADD_AVAILABLE_ROOM, ADD_ERROR, JOIN_ROOM, DISCONNECT, SEND_MESSAGE } from './action';
 
 export const addUserAC = (name) => ({
   type: ADD_USER,
@@ -29,7 +29,12 @@ export const joinRoomAC = (user, roomId) => ({
   type: JOIN_ROOM,
   newUser: user,
   roomId,
-}); 
+});
+
+export const sendMessageAC = (message) => ({
+  type: SEND_MESSAGE,
+  newMessage: message
+});
 
 export const fetchNewUserAC = (name, email, password) => {
   return async (dispatch) => {
@@ -100,7 +105,7 @@ export const fetchAllRoomsAC = () => {
 
 export const fetchJoinRoomAC = (user, roomId) => {
   return async (dispatch) => {
-    const response = await fetch('http://localhost:5000/rooms/room', {
+    const response = await fetch('http://localhost:5000/rooms/room/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -109,6 +114,22 @@ export const fetchJoinRoomAC = (user, roomId) => {
     });
     if (response.ok) {
       dispatch(joinRoomAC(user, roomId));
+    }
+  }
+}
+
+export const fetchSendMessageAC = (user, roomId, text) => {
+  return async (dispatch) => {
+    const response = await fetch('http://localhost:5000/rooms/room/message', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ user, roomId, text }),
+    });
+    const result = await response.json();
+    if (result.message) {
+      dispatch(sendMessageAC(result.message));
     }
   }
 }

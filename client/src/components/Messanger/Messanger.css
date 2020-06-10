@@ -7,6 +7,7 @@
   height: 90%;
   border: 3px solid lightgrey;
   background-color: white;
+  overflow-y: scroll;
 }
 
 .messanger__input-field {
@@ -34,4 +35,16 @@
 
 .messanger__btn:hover {
   background-color: lightgreen;
+}
+
+.message_message-wrapper {
+  width: 100%;
+}
+
+.messanger__mesage-container {
+  width: 30%;
+  margin: 15px;
+}
+
+.right {
 }

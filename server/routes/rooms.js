@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
+const moment = require('moment');
 const { Room } = require('../models/Room');
 const { User } = require('../models/User');
+const { Message } = require('../models/Message');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -24,7 +26,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.put('/room', async (req, res, next) => {
+router.put('/room/user', async (req, res, next) => {
   try {
     const { userId, roomId } = req.body;
     const user = await User.findOne({ _id: userId });
@@ -37,6 +39,26 @@ router.put('/room', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
+
+router.put('/room/message', async (req, res, next) => {
+  try {
+    const { user, roomId, text } = req.body;
+    const date = moment(new Date()).format('L');
+    const message = await Message.create({
+      text,
+      user,
+      date
+    });
+    const updated = await Room.updateOne({ _id: roomId }, { $push: { messages: message } });
+    if (updated.nModified > 0) {
+      res.send({ message });
+    } else {
+      res.send({ error: 'Something went wrong... Try again' });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
