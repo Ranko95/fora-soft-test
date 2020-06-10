@@ -118,7 +118,7 @@ export const fetchJoinRoomAC = (user, roomId) => {
   }
 }
 
-export const fetchSendMessageAC = (user, roomId, text) => {
+export const fetchSendMessageAC = (user, roomId, text, socket) => {
   return async (dispatch) => {
     const response = await fetch('http://localhost:5000/rooms/room/message', {
       method: 'PUT',
@@ -130,6 +130,9 @@ export const fetchSendMessageAC = (user, roomId, text) => {
     const result = await response.json();
     if (result.message) {
       dispatch(sendMessageAC(result.message));
+      socket.emit('message', result.message, () => {
+        console.log('message sent');
+      })
     }
   }
 }

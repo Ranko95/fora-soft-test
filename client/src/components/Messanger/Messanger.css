@@ -7,7 +7,6 @@
   height: 90%;
   border: 3px solid lightgrey;
   background-color: white;
-  overflow-y: scroll;
 }
 
 .messanger__input-field {
@@ -37,14 +36,20 @@
   background-color: lightgreen;
 }
 
-.message_message-wrapper {
+.messanger__message-wrapper {
   width: 100%;
+  display: flex;
 }
 
-.messanger__mesage-container {
+.flexEnd {
+  justify-content: flex-end;
+}
+
+.flexStart {
+  justify-content: flex-start;
+}
+
+.messanger__message-container {
   width: 30%;
   margin: 15px;
-}
-
-.right {
 }

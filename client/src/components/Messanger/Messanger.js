@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import JoinRoom from '../JoinRoom/JoinRoom';
 import Message from '../Message/Message';
-import { fetchSendMessageAC } from '../../redux/action-creator';
+import { fetchSendMessageAC, sendMessageAC } from '../../redux/action-creator';
 // import sendIcon from '../../images/send.png';
 
 let socket;
@@ -21,15 +21,23 @@ function Messanger() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(room.messages);
     socket = io(ENDPOINT);
 
-    socket.emit('join', {  });
+    socket.emit('join', { name: user, room }, () => {
+
+    });
+
     return () => {
-      socket.emit('disconnect', socket.id);
-      socket.close();
+      socket.emit('disconnect');
+      socket.off();
     }
-  }, [ENDPOINT])
+  }, [ENDPOINT]);
+
+  useEffect(() => {
+    socket.on('message', ({ message }) => {
+      dispatch(sendMessageAC(message));
+    })
+  }, [room.messages])
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -41,9 +49,10 @@ function Messanger() {
     if (text.trim() === '') {
       return
     } else {
-      const fetchSendMessage = fetchSendMessageAC(user, room._id, text);
+      const fetchSendMessage = fetchSendMessageAC(user, room._id, text, socket);
       setText('');
       await fetchSendMessage(dispatch);
+      socket.emit()
     }
   }
 
@@ -54,8 +63,10 @@ function Messanger() {
           room.messages.length
             ? room.messages.map(message => {
               return (
-                <div className={"messanger__mesage-container " + (message.user._id === user._id ? "right" : null)}>
-                  <Message key={message._id} name={message.user.name} text={message.text} date={message.date} />
+                <div className={"messanger__message-wrapper " + (message.user._id === user._id ? "flexEnd" : "flexStart")}>
+                  <div className={"messanger__message-container"}>
+                    <Message key={message._id} name={message.user.name} text={message.text} date={message.date} />
+                  </div>
                 </div>
               )
             })

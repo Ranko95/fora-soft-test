@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './JoinRoom.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { disconnectAC, fetchJoinRoomAC } from '../../redux/action-creator';
