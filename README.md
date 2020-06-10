@@ -27,3 +27,8 @@ Solution should:
 * Use React JS for UI
 * Use WebRTC for the video chat part
 
+# Launch the app
+
+* git clone
+* cd sever && npm i && npm start
+* cd client && npm i && npm start
