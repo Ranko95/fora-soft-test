@@ -35,7 +35,11 @@ function Messanger() {
 
   useEffect(() => {
     socket.on('message', ({ message }) => {
-      dispatch(sendMessageAC(message));
+      if (message.user._id === user._id) {
+        return;
+      } else {
+        dispatch(sendMessageAC(message));
+      }
     })
   }, [room.messages])
 
@@ -47,12 +51,12 @@ function Messanger() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (text.trim() === '') {
-      return
+      return;
     } else {
       const fetchSendMessage = fetchSendMessageAC(user, room._id, text, socket);
       setText('');
       await fetchSendMessage(dispatch);
-      socket.emit()
+      // socket.emit()
     }
   }
 
